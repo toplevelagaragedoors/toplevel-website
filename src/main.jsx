@@ -1,0 +1,21 @@
+import React from 'react';
+import { hydrateRoot, createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App.jsx';
+import './styles/base.css';
+import './styles/blocks.css';
+import './styles/premium.css';
+import './styles/light.css';
+
+const root = document.getElementById('root');
+const tree = (
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
+);
+
+// Prerendered HTML is present in production, so hydrate rather than re-render.
+if (root.hasChildNodes()) hydrateRoot(root, tree);
+else createRoot(root).render(tree);
