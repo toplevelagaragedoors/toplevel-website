@@ -9,7 +9,7 @@ const COUNT = PHOTOS.length;
 const COPIES = 2; // must be even so the halfway wrap lands on identical content
 
 export default function GalleryRail() {
-  const railRef = useMarquee({ speed: 34, dragSelector: 'button' });
+  const { railRef, trackRef } = useMarquee({ speed: 34, dragSelector: 'button' });
   const [open, setOpen] = useState(null);
 
   // Escape closes, arrows step through - a full-screen viewer that traps you
@@ -51,7 +51,7 @@ export default function GalleryRail() {
       </div>
 
       <div className="gallery" ref={railRef}>
-        <ul className="gallery__track">
+        <ul className="gallery__track" ref={trackRef}>
           {tiles.map((t) => (
             <li className="gtile" key={t.key} aria-hidden={t.clone || undefined}>
               <button

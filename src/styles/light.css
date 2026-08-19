@@ -731,3 +731,19 @@ body.has-cursor .projcard button { cursor: none; }
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.35); opacity: 0.55; }
 }
+
+/* --- Marquee rails: transform-driven, not scroll-driven ----------------- */
+
+.svrail,
+.gallery {
+  overflow: hidden;
+  /* Vertical page scrolling still works; horizontal drag is ours */
+  touch-action: pan-y;
+}
+
+.svtrack,
+.gallery__track {
+  will-change: transform;
+  /* Kept off the main thread so the drift cannot be blocked by layout work */
+  backface-visibility: hidden;
+}

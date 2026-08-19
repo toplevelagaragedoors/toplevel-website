@@ -12,7 +12,7 @@ const COPIES = 4;
  * at the client's request.
  */
 export default function ServiceRail() {
-  const railRef = useMarquee({ speed: 42 });
+  const { railRef, trackRef } = useMarquee({ speed: 42 });
 
   const loop = [];
   for (let c = 0; c < COPIES; c += 1) {
@@ -35,7 +35,7 @@ export default function ServiceRail() {
       </div>
 
       <div className="svrail" ref={railRef}>
-        <ul className="svtrack">
+        <ul className="svtrack" ref={trackRef}>
           {loop.map((s) => {
             const Icon = icons[s.n % icons.length];
             return (

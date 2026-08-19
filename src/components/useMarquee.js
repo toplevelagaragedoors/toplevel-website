@@ -1,106 +1,100 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * Infinite horizontal marquee on a native scroll container.
+ * Infinite horizontal marquee.
  *
- * Native overflow-x is what makes finger-swipe on mobile/iPad and two-finger
- * trackpad scrolling work with no code - the browser already handles them. On
- * top of that this adds a slow auto-drift, seamless wrapping at the halfway
- * point, and pointer-drag for mouse users.
+ * Driven by `transform: translate3d()` rather than `scrollLeft`. Browsers round
+ * scrollLeft to whole device pixels, so at these speeds (well under 1px per
+ * frame) the drift advanced in uneven 0/1px steps and visibly juddered.
+ * A transform interpolates sub-pixel and runs on the compositor, so it is
+ * smooth at any speed.
  *
- * The content must be duplicated an even number of times, so that scrolling by
- * exactly half the track lands on identical content and the jump is invisible.
+ * Pointer events cover mouse and touch, so drag-to-scrub works on phones too.
+ * `touch-action: pan-y` on the rail leaves vertical page scrolling alone.
+ *
+ * The track must contain an even number of copies of the content: wrapping by
+ * exactly half its width lands on identical items, so the seam is invisible.
  */
 export default function useMarquee({ speed = 42, dragSelector = 'a' } = {}) {
   const railRef = useRef(null);
+  const trackRef = useRef(null);
 
   useEffect(() => {
     const rail = railRef.current;
-    if (!rail) return undefined;
+    const track = trackRef.current;
+    if (!rail || !track) return undefined;
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     let raf = 0;
     let paused = false;
-    let idleTimer = 0;
+    let idle = 0;
     let half = 0;
-
-    // Chromium quantises scrollLeft, so a sub-pixel increment rounds straight
-    // back down and the rail never moves. Track position as a float instead.
-    let pos = rail.scrollLeft;
-    let lastTs = 0;
+    let pos = 0;
+    let last = 0;
 
     const measure = () => {
-      half = rail.scrollWidth / 2;
-      if (half > 0 && rail.scrollLeft === 0) {
-        rail.scrollLeft = 1;
-        pos = 1;
-      }
+      half = track.scrollWidth / 2;
+    };
+
+    const apply = () => {
+      track.style.transform = `translate3d(${pos.toFixed(2)}px, 0, 0)`;
     };
 
     const wrap = () => {
       if (half <= 0) return;
-      if (rail.scrollLeft >= half) {
-        rail.scrollLeft -= half;
-        pos = rail.scrollLeft;
-      } else if (rail.scrollLeft <= 0) {
-        rail.scrollLeft += half;
-        pos = rail.scrollLeft;
-      }
-    };
-
-    const sync = () => {
-      pos = rail.scrollLeft;
+      if (pos <= -half) pos += half;
+      else if (pos > 0) pos -= half;
     };
 
     const tick = (now) => {
       raf = requestAnimationFrame(tick);
-      const dt = lastTs ? Math.min((now - lastTs) / 1000, 0.05) : 0;
-      lastTs = now;
-      if (!paused) {
-        pos += speed * dt;
-        rail.scrollLeft = pos;
-      }
+      const dt = last ? Math.min((now - last) / 1000, 0.05) : 0;
+      last = now;
+      if (paused) return;
+      pos -= speed * dt;
       wrap();
+      apply();
     };
 
-    // Motion yields to real interaction only, then resumes once the user stops.
-    // Note it deliberately does not pause on hover: these rails are full-bleed
-    // and tall, so the pointer sits over them almost permanently on desktop.
-    const nudgePause = (ms = 2200) => {
+    // Motion yields to a real interaction, then resumes once the user stops.
+    // It deliberately does not pause on hover: these rails are full-bleed and
+    // tall, so on desktop the pointer sits over them almost permanently.
+    const nudge = (ms = 2000) => {
       paused = true;
-      clearTimeout(idleTimer);
-      idleTimer = setTimeout(() => {
+      clearTimeout(idle);
+      idle = setTimeout(() => {
         paused = false;
       }, ms);
     };
 
     let dragging = false;
     let startX = 0;
-    let startScroll = 0;
+    let startPos = 0;
     let moved = 0;
 
     const onDown = (e) => {
-      if (e.pointerType === 'touch') return; // native touch scrolling handles this
       dragging = true;
       moved = 0;
       startX = e.clientX;
-      startScroll = rail.scrollLeft;
+      startPos = pos;
       paused = true;
+      clearTimeout(idle);
     };
 
     const onMove = (e) => {
       if (!dragging) return;
       const dx = e.clientX - startX;
       moved = Math.abs(dx);
-      // Only take pointer capture once this is genuinely a drag; capturing on
-      // pointerdown would retarget the click and swallow taps on the cards.
+      // Only capture once this is clearly a drag, so a tap still reaches the
+      // card underneath.
       if (moved > 6 && !rail.hasPointerCapture(e.pointerId)) {
         rail.classList.add('is-dragging');
         rail.setPointerCapture(e.pointerId);
       }
-      rail.scrollLeft = startScroll - dx;
+      pos = startPos + dx;
       wrap();
-      sync();
+      apply();
     };
 
     const onUp = (e) => {
@@ -112,10 +106,10 @@ export default function useMarquee({ speed = 42, dragSelector = 'a' } = {}) {
       } catch (err) {
         /* already released */
       }
-      nudgePause();
+      nudge();
     };
 
-    // A drag that ends on a link should not follow it
+    // A drag that finishes on a link or button must not activate it
     const onClick = (e) => {
       if (moved > 6 && dragSelector && e.target.closest(dragSelector)) {
         e.preventDefault();
@@ -124,10 +118,15 @@ export default function useMarquee({ speed = 42, dragSelector = 'a' } = {}) {
       moved = 0;
     };
 
-    const onWheel = () => {
-      nudgePause();
-      sync();
+    // Trackpads and shift-wheel send horizontal deltas; honour them
+    const onWheel = (e) => {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      nudge();
+      pos -= e.deltaX;
+      wrap();
+      apply();
     };
+
     const onFocusIn = () => {
       paused = true;
     };
@@ -136,18 +135,16 @@ export default function useMarquee({ speed = 42, dragSelector = 'a' } = {}) {
     };
 
     measure();
+    apply();
     const ro = new ResizeObserver(measure);
-    ro.observe(rail);
+    ro.observe(track);
 
     rail.addEventListener('pointerdown', onDown);
     rail.addEventListener('pointermove', onMove);
     rail.addEventListener('pointerup', onUp);
     rail.addEventListener('pointercancel', onUp);
     rail.addEventListener('click', onClick, true);
-    rail.addEventListener('scroll', wrap, { passive: true });
     rail.addEventListener('wheel', onWheel, { passive: true });
-    rail.addEventListener('touchstart', () => nudgePause(3000), { passive: true });
-    rail.addEventListener('touchmove', sync, { passive: true });
     rail.addEventListener('focusin', onFocusIn);
     rail.addEventListener('focusout', onFocusOut);
 
@@ -155,19 +152,18 @@ export default function useMarquee({ speed = 42, dragSelector = 'a' } = {}) {
 
     return () => {
       cancelAnimationFrame(raf);
-      clearTimeout(idleTimer);
+      clearTimeout(idle);
       ro.disconnect();
       rail.removeEventListener('pointerdown', onDown);
       rail.removeEventListener('pointermove', onMove);
       rail.removeEventListener('pointerup', onUp);
       rail.removeEventListener('pointercancel', onUp);
       rail.removeEventListener('click', onClick, true);
-      rail.removeEventListener('scroll', wrap);
       rail.removeEventListener('wheel', onWheel);
       rail.removeEventListener('focusin', onFocusIn);
       rail.removeEventListener('focusout', onFocusOut);
     };
   }, [speed, dragSelector]);
 
-  return railRef;
+  return { railRef, trackRef };
 }

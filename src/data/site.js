@@ -40,8 +40,8 @@ export const services = [
   { slug: 'opener-repair', name: 'Opener Repair', short: 'Gears, sprockets, trolleys, safety eyes and travel limits put right.', img: 'sv-opener-repair', alt: 'Garage door opener with the casing open showing the control board and chain drive' },
   { slug: 'opener-installation', name: 'Opener Installation', short: 'Chain, belt and wall-mount openers fitted and programmed.', img: 'sv-opener-installation', alt: 'LiftMaster garage door opener mounted to the ceiling with the rail fitted' },
   { slug: 'off-track-repair', name: 'Off-Track Repair', short: 'Doors off the rail reset safely, with the track checked for damage.', img: 'sv-off-track-repair', alt: 'Garage door roller and hinge bracket at the curve of a bent track' },
-  { slug: 'rollers-replacement', name: 'Rollers Replacement', short: 'Sealed nylon rollers that run quieter and outlast steel by years.', img: 'sv-rollers-replacement', alt: 'New nylon garage door rollers beside a door with the old steel roller in the track' },
-  { slug: 'hinges-replacement', name: 'Hinges Replacement', short: 'Worn or cracked hinges swapped before they pull the section out of line.', img: 'sv-hinges-replacement', alt: 'Galvanised garage door hinge and roller bracket fixed to a white door section' },
+  { slug: 'rollers-replacement', name: 'Rollers Replacement', short: 'Sealed nylon rollers that run quieter and outlast steel by years.', img: 'sv-rollers-replacement', alt: 'New sealed nylon garage door rollers with metal stems and ball bearings' },
+  { slug: 'hinges-replacement', name: 'Hinges Replacement', short: 'Worn or cracked hinges swapped before they pull the section out of line.', img: 'sv-hinges-replacement', alt: 'Galvanised garage door hinge bolted to a white door section with the roller seated in the track' },
   { slug: 'tracks-replacement', name: 'Tracks Replacement', short: 'Bent or corroded track replaced and realigned to manufacturer spec.', img: 'sv-tracks-replacement', alt: 'Galvanised garage door track and curved radius section fixed to the door frame' },
   { slug: 'weather-strip-replacement', name: 'Bottom Weather Strip Replacement', short: 'New bottom seal to keep water, draughts and pests out of the garage.', img: 'sv-weather-strip-replacement', alt: 'New black bottom weather seal fitted along the base of a white garage door' },
   { slug: 'panels-repair', name: 'Panels Repair', short: 'Dented or damaged sections repaired where a full replacement is not needed.', img: 'sv-panels-repair', alt: 'Cracked and dented section on a white raised-panel garage door' },
@@ -206,7 +206,6 @@ export const projects = [
   { n: 11, caption: 'Single Door Installation, Long Panels Design' },
   { n: 12, caption: 'Installation of Single and Double Door Insulated by Steelback' },
   { n: 14, caption: 'Wood Design Door, Springs and Tracks' },
-  { n: 15, caption: 'Springs Replacement and Opener Installation' },
   { n: 17, caption: 'Installation of Sandstone Color, Long Panels Door' },
 ];
 
