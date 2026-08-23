@@ -36,20 +36,19 @@ export const addressOneLine = `${biz.city}, ${biz.state}`;
 
 // --- Services --------------------------------------------------------------
 export const services = [
-  { slug: 'springs-replacement', name: 'Springs Replacement', short: 'Torsion and extension springs replaced in matched pairs, sized to your door.', img: 'sv-springs-replacement', alt: 'Torsion springs mounted above a garage door on the spring bar' },
+  { slug: 'springs-replacement', name: 'Springs Replacement', short: 'Torsion and extension springs replaced in matched pairs, sized to your door.', img: 'sv-springs-replacement', alt: 'Torsion springs on the spring bar above a white garage door with window inserts' },
   { slug: 'opener-repair', name: 'Opener Repair', short: 'Gears, sprockets, trolleys, safety eyes and travel limits put right.', img: 'sv-opener-repair', alt: 'Garage door opener with the casing open showing the control board and chain drive' },
   { slug: 'opener-installation', name: 'Opener Installation', short: 'Chain, belt and wall-mount openers fitted and programmed.', img: 'sv-opener-installation', alt: 'LiftMaster garage door opener mounted to the ceiling with the rail fitted' },
-  { slug: 'off-track-repair', name: 'Off-Track Repair', short: 'Doors off the rail reset safely, with the track checked for damage.', img: 'sv-off-track-repair', alt: 'Garage door roller and hinge bracket at the curve of a bent track' },
+  { slug: 'off-track-repair', name: 'Off-Track Repair', short: 'Doors off the rail reset safely, with the track checked for damage.', img: 'sv-off-track-repair', alt: 'White sectional garage door sagging off the right track, viewed from inside the garage' },
   { slug: 'rollers-replacement', name: 'Rollers Replacement', short: 'Sealed nylon rollers that run quieter and outlast steel by years.', img: 'sv-rollers-replacement', alt: 'New sealed nylon garage door rollers with metal stems and ball bearings' },
   { slug: 'hinges-replacement', name: 'Hinges Replacement', short: 'Worn or cracked hinges swapped before they pull the section out of line.', img: 'sv-hinges-replacement', alt: 'Galvanised garage door hinge bolted to a white door section with the roller seated in the track' },
-  { slug: 'tracks-replacement', name: 'Tracks Replacement', short: 'Bent or corroded track replaced and realigned to manufacturer spec.', img: 'sv-tracks-replacement', alt: 'Galvanised garage door track and curved radius section fixed to the door frame' },
+  { slug: 'tracks-replacement', name: 'Tracks Replacement', short: 'Bent or corroded track replaced and realigned to manufacturer spec.', img: 'sv-tracks-replacement', alt: 'Curved galvanised garage door tracks with mounting bracket and cable drum' },
   { slug: 'weather-strip-replacement', name: 'Bottom Weather Strip Replacement', short: 'New bottom seal to keep water, draughts and pests out of the garage.', img: 'sv-weather-strip-replacement', alt: 'New black bottom weather seal fitted along the base of a white garage door' },
   { slug: 'panels-repair', name: 'Panels Repair', short: 'Dented or damaged sections repaired where a full replacement is not needed.', img: 'sv-panels-repair', alt: 'Cracked and dented section on a white raised-panel garage door' },
   { slug: 'panels-replacement', name: 'Panels Replacement', short: 'Individual sections replaced and colour-matched to the existing door.', img: 'sv-panels-replacement', alt: 'Newly installed white long-panel garage door with window inserts' },
   { slug: 'new-door-installation', name: 'New Door Installation', short: 'Insulated steel, carriage house and full-view glass, measured on site.', img: 'sv-new-door-installation', alt: 'Newly installed brown carriage-style garage door with window inserts and decorative hardware' },
-  { slug: 'new-opener-installation', name: 'New Opener Installation', short: 'Quiet belt drives and smart Wi-Fi units, installed and set up.', img: 'sv-new-opener-installation', alt: 'Newly installed LiftMaster garage door opener mounted to the rafters of a garage' },
-  { slug: 'emergency-services', name: 'Emergency Services', short: 'Door stuck open or car trapped inside? You go to the front of the queue.', img: 'sv-emergency-services', alt: 'Sectional garage door closed from the inside with the opener light on' },
-  { slug: 'service-and-maintenance', name: 'Service and Maintenance', short: 'Annual tune-ups that catch worn parts before they strand you.', img: 'sv-service-and-maintenance', alt: 'Wood-finish sectional garage door seen from inside with torsion spring, tracks and hinges' },
+  { slug: 'emergency-services', name: 'Emergency Services', short: 'Door stuck open or car trapped inside? You go to the front of the queue.', img: 'sv-emergency-services', alt: 'Car crashed through a white sectional garage door, with the door panels and track torn off' },
+  { slug: 'service-and-maintenance', name: 'Service and Maintenance', short: 'Annual tune-ups that catch worn parts before they strand you.', img: 'sv-service-and-maintenance', alt: 'Technician lubricating a garage door hinge and roller during a maintenance visit' },
 ];
 
 
