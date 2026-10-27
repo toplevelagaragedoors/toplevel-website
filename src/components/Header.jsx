@@ -1,17 +1,37 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { biz } from '../data/site.js';
+import { biz, services, areas } from '../data/site.js';
+import { hasServicePage } from '../data/servicePages.js';
+import { hasLocationPage } from '../data/locationPages.js';
 import OpenStatus from './OpenStatus.jsx';
 import { Phone, Clock, Pin } from './Icons.jsx';
+
+// Dropdown contents, derived from the built pages so the nav never links to a
+// page that does not exist.
+const serviceMenu = services
+  .filter((s) => hasServicePage(s.slug))
+  .map((s) => ({ to: `/services/${s.slug}`, label: s.name }));
+
+const areaMenu = areas
+  .filter((a) => hasLocationPage(`${a.slug}-sc`))
+  .map((a) => ({ to: `/service-areas/${a.slug}-sc`, label: a.name }));
 
 const nav = [
   { to: '/', label: 'Home', end: true },
   { to: '/about', label: 'About' },
-  { to: '/services', label: 'Services' },
-  { to: '/service-areas', label: 'Service Areas' },
+  { to: '/services', label: 'Services', menu: serviceMenu },
+  { to: '/service-areas', label: 'Service Areas', menu: areaMenu },
   { to: '/projects', label: 'Projects' },
   { to: '/contact', label: 'Contact' },
 ];
+
+function Caret() {
+  return (
+    <svg className="nav__caret" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
+}
 
 export default function Header() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -31,6 +51,8 @@ export default function Header() {
     document.body.classList.toggle('is-locked', openMenu);
     return () => document.body.classList.remove('is-locked');
   }, [openMenu]);
+
+  const tab = openMenu ? 0 : -1;
 
   return (
     <>
@@ -65,16 +87,38 @@ export default function Header() {
           </Link>
 
           <nav className="nav" aria-label="Primary">
-            {nav.map((n) => (
-              <NavLink
-                key={n.to}
-                to={n.to}
-                end={n.end}
-                className={({ isActive }) => (isActive ? 'is-active' : undefined)}
-              >
-                {n.label}
-              </NavLink>
-            ))}
+            {nav.map((n) =>
+              n.menu ? (
+                <div className="nav__group" key={n.to}>
+                  <NavLink
+                    to={n.to}
+                    end={n.end}
+                    className={({ isActive }) => (isActive ? 'is-active' : undefined)}
+                  >
+                    {n.label}
+                    <Caret />
+                  </NavLink>
+                  <div className="nav__menu">
+                    <div className="nav__menu-grid">
+                      {n.menu.map((m) => (
+                        <Link key={m.to} to={m.to}>
+                          {m.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <NavLink
+                  key={n.to}
+                  to={n.to}
+                  end={n.end}
+                  className={({ isActive }) => (isActive ? 'is-active' : undefined)}
+                >
+                  {n.label}
+                </NavLink>
+              )
+            )}
           </nav>
 
           <div className="header__cta">
@@ -106,13 +150,32 @@ export default function Header() {
 
       <div id="mobile-drawer" className={`drawer${openMenu ? ' is-open' : ''}`} aria-hidden={!openMenu}>
         <nav aria-label="Mobile">
-          {nav.map((n) => (
-            <Link key={n.to} to={n.to} tabIndex={openMenu ? 0 : -1}>
-              {n.label}
-            </Link>
-          ))}
+          {nav.map((n) =>
+            n.menu ? (
+              <details className="drawer__group" key={n.to}>
+                <summary>
+                  {n.label}
+                  <Caret />
+                </summary>
+                <div className="drawer__sub">
+                  <Link to={n.to} tabIndex={tab}>
+                    All {n.label.toLowerCase()}
+                  </Link>
+                  {n.menu.map((m) => (
+                    <Link key={m.to} to={m.to} tabIndex={tab}>
+                      {m.label}
+                    </Link>
+                  ))}
+                </div>
+              </details>
+            ) : (
+              <Link key={n.to} to={n.to} tabIndex={tab}>
+                {n.label}
+              </Link>
+            )
+          )}
         </nav>
-        <Link to="/contact" className="btn btn--volt btn--block" tabIndex={openMenu ? 0 : -1}>
+        <Link to="/contact" className="btn btn--volt btn--block" tabIndex={tab}>
           Get a free estimate
         </Link>
         <div className="drawer__meta">

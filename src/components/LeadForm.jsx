@@ -250,7 +250,7 @@ export default function LeadForm({ formName = 'free-estimate', light = false, co
         <a href={biz.phoneHref} style={{ color: 'inherit', textDecoration: 'underline' }}>
           {biz.phone}
         </a>{' '}
-        during opening hours. No spam, no shared data.
+        any time, day or night. No spam, no shared data.
       </p>
     </form>
   );

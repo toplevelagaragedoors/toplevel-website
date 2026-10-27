@@ -4,25 +4,25 @@ import Reveal from '../components/Reveal.jsx';
 import HeroSlider from '../components/HeroSlider.jsx';
 import BookSection from '../components/BookSection.jsx';
 import ServiceRail from '../components/ServiceRail.jsx';
+import HomeContent from '../components/HomeContent.jsx';
 import GalleryRail from '../components/GalleryRail.jsx';
 import { AboutBlock } from '../components/Sections.jsx';
 import { CtaBand } from '../components/Blocks.jsx';
 import FaqSection from '../components/FaqSection.jsx';
-import { areas, homeFaqs } from '../data/site.js';
-import { organizationSchema, faqSchema, combine } from '../lib/schema.js';
+import Testimonials from '../components/Testimonials.jsx';
+import MapSection from '../components/MapSection.jsx';
+import { areas } from '../data/site.js';
+import { hasLocationPage } from '../data/locationPages.js';
+import { localBusinessSchema } from '../lib/schema.js';
 
 export default function Home() {
   return (
     <>
       <Seo
-        title="Garage Door Repair in Charleston, SC | Top Level Garage Doors"
-        description="Same-day garage door repair in Charleston, SC. Broken springs, openers, cables and off-track doors fixed by licensed techs, six days a week. Free estimates - call 843-830-1627."
+        title="Garage Door Repair in Charleston, SC - Top Level"
+        description="Looking for Garage Door Repair in Charleston? Top Level Garage Door handles door malfunctions, uneven movement, and sudden breakdowns. Call us today!"
         path="/"
-        schema={combine(
-          organizationSchema()['@graph'][0],
-          organizationSchema()['@graph'][1],
-          faqSchema(homeFaqs)
-        )}
+        schema={localBusinessSchema()}
       />
 
       {/* 1 - Hero */}
@@ -34,10 +34,13 @@ export default function Home() {
       {/* 3 - Services */}
       <ServiceRail />
 
-      {/* 4 - About */}
+      {/* 4 - Why choose us (directly below services) */}
       <AboutBlock />
 
-      {/* 5 - CTA */}
+      {/* 6 - Testimonials */}
+      <Testimonials />
+
+      {/* 7 - CTA */}
       <CtaBand
         eyebrow="Don't let a broken garage door stop your day"
         lines={['Car stuck inside?', "Door won't close?", "We'll get it fixed."]}
@@ -53,18 +56,30 @@ export default function Home() {
               <h2>Charleston and surrounding areas</h2>
             </div>
             <p>
-              From the peninsula out to Summerville, Goose Creek and the barrier islands. Not sure if we
-              reach you? Call and ask - we will make it work for you.
+              We provide garage door repair in Charleston and right across the Lowcountry, from the
+              peninsula out to Summerville, Goose Creek and the barrier islands. Not sure if we reach
+              you? Call and ask and we will make it work for you.
             </p>
           </Reveal>
 
           <Reveal className="arealist">
-            {areas.map((a) => (
-              <div className="arearow" key={a.slug}>
-                <span className="arearow__name">{a.name}</span>
-                <span className="arearow__meta">{a.distance}</span>
-              </div>
-            ))}
+            {areas.map((a) => {
+              const row = (
+                <>
+                  <span className="arearow__name">{a.name}</span>
+                  <span className="arearow__meta">{a.distance}</span>
+                </>
+              );
+              return hasLocationPage(`${a.slug}-sc`) ? (
+                <Link className="arearow" to={`/service-areas/${a.slug}-sc`} key={a.slug}>
+                  {row}
+                </Link>
+              ) : (
+                <Link className="arearow" to="/" key={a.slug}>
+                  {row}
+                </Link>
+              );
+            })}
           </Reveal>
 
           <Reveal className="btn-row">
@@ -78,16 +93,22 @@ export default function Home() {
       {/* 7 - Gallery */}
       <GalleryRail />
 
-      {/* 8 - FAQs */}
+      {/* 8 - Garage door repair content (target keyword), second half */}
+      <HomeContent />
+
+      {/* 9 - FAQs */}
       <FaqSection />
 
-      {/* 9 - CTA */}
+      {/* 10 - CTA */}
       <CtaBand
         tuck
         eyebrow="Your garage shouldn't be the reason you're stuck at home"
         lines={['Get your door', 'working again', 'without the runaround.']}
         body="No guessing, no waiting days for a callback, and no wondering when someone will actually show up. Tell us what's happening and we'll get a technician out to diagnose the problem and get your garage door to operate again."
       />
+
+      {/* 11 - GBP map, just before the footer */}
+      <MapSection />
     </>
   );
 }

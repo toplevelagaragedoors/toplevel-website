@@ -81,19 +81,15 @@ export default function HeroSlider() {
           <div className="fxeyebrow">Garage door specialists</div>
           <h1 className="lines is-in">
             <span className="line">
-              <span>Garage door</span>
+              <span>Garage Door Repair</span>
             </span>
             <span className="line">
-              <span>problems?</span>
-            </span>
-            <span className="line">
-              <span className="accent">Fixed fast.</span>
+              <span className="accent">in Charleston, SC</span>
             </span>
           </h1>
           <p className="chero__sub">
-            Fast, professional garage door repair throughout Charleston and the Lowcountry. From broken
-            springs and faulty openers to off-track doors, we get your garage door working safely again -
-            often the same day.
+            Professional garage door repair in Charleston and the Lowcountry. From broken springs to
+            faulty openers, we get your door working safely again, often same day.
           </p>
           <div className="btn-row" style={{ marginTop: 0 }}>
             <a href={biz.phoneHref} className="btn btn--fx">

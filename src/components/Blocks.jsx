@@ -5,6 +5,7 @@ import Reveal from './Reveal.jsx';
 
 export function CtaBand({
   tuck = false,
+  buttons = true,
   eyebrow = 'Stop living with a broken door',
   // Array of strings renders one line each, so the copy breaks where it was
   // written rather than wherever the column happens to run out.
@@ -29,14 +30,13 @@ export function CtaBand({
           <a href={biz.phoneHref} className="ctaband__phone">
             <Phone size={26} /> {biz.phone}
           </a>
-          <div className="btn-row">
-            <Link to="/contact" className="btn" style={{ background: '#fff', color: 'var(--brand)', borderColor: '#fff' }}>
-              Get a free estimate
-            </Link>
-            <Link to="/services" className="btn btn--ghost">
-              See all services
-            </Link>
-          </div>
+          {buttons && (
+            <div className="btn-row">
+              <Link to="/contact" className="btn" style={{ background: '#fff', color: 'var(--brand)', borderColor: '#fff' }}>
+                Get a free estimate
+              </Link>
+            </div>
+          )}
         </Reveal>
       </div>
     </section>

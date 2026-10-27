@@ -14,7 +14,15 @@ const MARKS = [
   { x: 18, y: 26, s: 1.9, d: 1.8 },
 ];
 
-export default function FaqSection() {
+const DEFAULT_HEADING = (
+  <>
+    Find answers to the most common <span className="accent">customer queries</span>
+  </>
+);
+
+// Props let other pages reuse this exact section with their own FAQs; with no
+// props the homepage renders unchanged.
+export default function FaqSection({ faqs = homeFaqs, eyebrow = 'Common questions', heading = DEFAULT_HEADING } = {}) {
   const listRef = useRef(null);
 
   // <details name="..."> would do this natively, but support is still recent
@@ -32,16 +40,14 @@ export default function FaqSection() {
         <Reveal className="faqsec__body">
           <div className="why__eyebrow">
             <i />
-            Common questions
+            {eyebrow}
             <i />
           </div>
 
-          <h2>
-            Find answers to the most common <span className="accent">customer queries</span>
-          </h2>
+          <h2>{heading}</h2>
 
           <div className="faqcards" ref={listRef}>
-            {homeFaqs.map((f, i) => (
+            {faqs.map((f, i) => (
               <details key={f.q} open={i === 0} onToggle={closeSiblings}>
                 <summary>
                   <span>{f.q}</span>

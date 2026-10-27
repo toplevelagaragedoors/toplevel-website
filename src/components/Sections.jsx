@@ -27,9 +27,21 @@ const POINTS = [
 ];
 
 
-export function AboutBlock() {
+// Default homepage content. Passing props lets other pages reuse this exact
+// section with their own copy; with no props the homepage renders unchanged.
+const DEFAULT_HEADING = (
+  <>
+    Garage door work backed by experience, straight pricing and{' '}
+    <span className="accent">a door that actually works.</span>
+  </>
+);
+const DEFAULT_LEDE =
+  'We started out taking the calls nobody else wanted - the late door that would not close, the beach rental with a seized opener an hour before check-in. Word travelled, and that is still most of how we get work.';
+const DEFAULT_ID = 'about';
+
+export function AboutBlock({ heading = DEFAULT_HEADING, lede = DEFAULT_LEDE, points = POINTS, id = DEFAULT_ID } = {}) {
   return (
-    <section className="section why" id="about">
+    <section className="section why" id={id}>
       {/* Decorative looping wordmark behind the heading */}
       <div className="why__ghost" aria-hidden="true">
         <div className="why__ghostTrack">
@@ -49,19 +61,12 @@ export function AboutBlock() {
             <i />
           </div>
 
-          <h2>
-            Garage door work backed by experience, straight pricing and{' '}
-            <span className="accent">a door that actually works.</span>
-          </h2>
+          <h2>{heading}</h2>
 
-          <p className="lede">
-            We started out taking the calls nobody else wanted - the late door that would not close, the
-            beach rental with a seized opener an hour before check-in. Word travelled, and that is still
-            most of how we get work.
-          </p>
+          <p className="lede">{lede}</p>
 
           <ul className="why__points">
-            {POINTS.map((pt) => {
+            {points.map((pt) => {
               const I = pt.icon;
               return (
                 <li key={pt.text}>
@@ -88,7 +93,7 @@ export function AboutBlock() {
             src="/img/why-1280.webp"
             srcSet="/img/why-560.webp 560w, /img/why-860.webp 860w, /img/why-1280.webp 1280w"
             sizes="(min-width: 1000px) 52vw, 100vw"
-            alt="Wood-finish sectional garage door with a LiftMaster ceiling opener installed by Top Level Garage Doors"
+            alt="Wood-finish sectional garage door with a LiftMaster ceiling opener installed by Top Level Garage Door"
             width="1280"
             height="1088"
             loading="lazy"
