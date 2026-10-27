@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="Garage Door Repair in Charleston, SC - Top Level"
+        title="Garage Door Repair in Charleston - Top Level"
         description="Looking for Garage Door Repair in Charleston? Top Level Garage Door handles door malfunctions, uneven movement, and sudden breakdowns. Call us today!"
         path="/"
         schema={localBusinessSchema()}
