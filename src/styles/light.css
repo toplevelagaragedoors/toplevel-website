@@ -149,7 +149,7 @@ body { background: #fff; color: var(--text-body); }
 
 .book__vanNote { color: #6a7484; }
 
-.book__body h2 { color: var(--text-dark); }
+.book__body .book__title { color: var(--text-dark); }
 
 /* Form fields on light surfaces */
 .form--bare .field input,

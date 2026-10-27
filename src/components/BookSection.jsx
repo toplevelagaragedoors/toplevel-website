@@ -10,7 +10,7 @@ export default function BookSection() {
     <section className="book book--flip" id="book">
       <Reveal className="book__body">
         <div className="fxeyebrow">Complete door care</div>
-        <h2>Book an appointment</h2>
+        <div className="book__title">Book an appointment</div>
         <LeadForm formName="contact" bare />
       </Reveal>
 
@@ -20,7 +20,7 @@ export default function BookSection() {
             src="/img/van-cutout-1100.webp"
             srcSet="/img/van-cutout-520.webp 520w, /img/van-cutout-760.webp 760w, /img/van-cutout-1100.webp 1100w"
             sizes="(min-width: 1000px) 46vw, 88vw"
-            alt="Top Level Garage Doors branded service van"
+            alt="Top Level Garage Door branded service van"
             width="1100"
             height="704"
             loading="lazy"

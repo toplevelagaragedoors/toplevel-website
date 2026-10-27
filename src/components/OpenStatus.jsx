@@ -4,13 +4,13 @@ const TZ = 'America/New_York';
 
 // Sunday = 0. Minutes from midnight, local to the business.
 const SCHEDULE = [
-  { open: 7 * 60, close: 19 * 60 }, // Sun
-  { open: 7 * 60, close: 19 * 60 }, // Mon
-  { open: 7 * 60, close: 19 * 60 }, // Tue
-  { open: 7 * 60, close: 19 * 60 }, // Wed
-  { open: 7 * 60, close: 19 * 60 }, // Thu
-  { open: 7 * 60, close: 16 * 60 }, // Fri
-  null, // Sat - closed
+  { open: 0, close: 24 * 60 }, // Sun
+  { open: 0, close: 24 * 60 }, // Mon
+  { open: 0, close: 24 * 60 }, // Tue
+  { open: 0, close: 24 * 60 }, // Wed
+  { open: 0, close: 24 * 60 }, // Thu
+  { open: 0, close: 24 * 60 }, // Fri
+  { open: 0, close: 24 * 60 }, // Sat
 ];
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -46,7 +46,7 @@ export function getStatus(now = new Date()) {
 
   const today = SCHEDULE[dayIdx];
   if (today && minutes >= today.open && minutes < today.close) {
-    return { open: true, label: `Open now · closes ${fmtTime(today.close)}` };
+    return { open: true, label: 'Open 24/7' };
   }
 
   // Opening later today?
@@ -78,7 +78,7 @@ export default function OpenStatus() {
     return () => clearInterval(id);
   }, []);
 
-  if (!status) return <span className="topbar__item">Sun-Thu 7am-7pm · Fri 7am-4pm</span>;
+  if (!status) return <span className="topbar__item">Open 24/7</span>;
 
   return (
     <span className="topbar__item">

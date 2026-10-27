@@ -57,8 +57,10 @@
 .lines .line {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.06em;
-  margin-bottom: -0.06em;
+  /* Extra bottom room so descenders (g, p) and the comma are never clipped by
+     the reveal mask; the matching negative margin keeps the line rhythm tight. */
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
 }
 
 .lines .line > span {
@@ -384,7 +386,7 @@
 }
 
 .chero__copy {
-  max-width: 640px;
+  max-width: 700px;
 }
 
 @keyframes fadeIn {
@@ -588,16 +590,15 @@
   margin-bottom: 1.15rem;
 }
 
-/* Line breaks are authored in the markup. Holding them with nowrap only works
-   where the column is wide enough - on phones it forced the headline off the
-   side of the screen. */
-@media (min-width: 700px) {
-  .chero--fx h1 .line > span { white-space: nowrap; }
-}
+/* Line breaks are authored via the two spans. The lines are allowed to wrap so
+   a long headline is never clipped on the right by the reveal mask; the column
+   width and font size below keep each authored line on one line at normal
+   widths. */
+.chero--fx h1 .line > span { white-space: normal; }
 
 .chero--fx h1 {
-  font-size: clamp(2.1rem, 5.5vw, 4.4rem);
-  line-height: 0.92;
+  font-size: clamp(2.05rem, 5vw, 4rem);
+  line-height: 1.04;
   letter-spacing: -0.035em;
   margin-bottom: 1.5rem;
 }
@@ -701,7 +702,7 @@
 @media (max-width: 1199px) {
   .header__inner { grid-template-columns: auto auto; height: 74px; }
   .chero--fx { min-height: 0; }
-  .chero--fx .chero__inner { padding-block: 2.5rem 0; }
+  .chero--fx .chero__inner { padding-block: 2.5rem; }
   .chero--fx .chero__sub { max-width: none; }
   .btn--fx { padding: 1.05rem 1.3rem; font-size: 0.74rem; letter-spacing: 0.06em; }
   /* Buttons go full-width and stack, so a long phone number never wraps
@@ -1066,9 +1067,13 @@ body.has-cursor .svrail { cursor: none; }
   width: 100%;
 }
 
-.book__body h2 {
+.book__body .book__title {
   color: #fff;
   text-transform: none;
+  font-family: var(--display);
+  font-weight: 800;
+  line-height: 1.03;
+  text-wrap: balance;
   font-size: clamp(1.9rem, 4.2vw, 3.1rem);
   letter-spacing: -0.03em;
   margin-bottom: 1.75rem;
@@ -2457,6 +2462,11 @@ html, body { overflow-x: clip; }
 /* --- Service-area chips line up on mobile ------------------------------- */
 
 @media (max-width: 700px) {
+  /* Heading, eyebrow and intro read left-aligned on mobile */
+  .areastrip .svhead { text-align: left; margin-inline: 0; }
+  .areastrip .svhead .fxeyebrow { justify-content: flex-start; }
+  .areastrip .svhead p { margin-inline: 0; }
+
   .areastrip__grid {
     display: grid;
     grid-template-columns: 1fr;

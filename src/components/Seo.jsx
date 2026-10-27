@@ -8,7 +8,9 @@ export const headStore = { current: null };
 const isServer = typeof window === 'undefined';
 
 function buildTags({ title, description, path, image, noindex, schema, breadcrumbs }) {
-  const canonical = SITE_URL + (path === '/' ? '/' : path.replace(/\/$/, ''));
+  // Canonicals use a trailing slash (e.g. /about/); the homepage stays as the
+  // bare root. The sitemap in scripts/prerender.mjs matches this convention.
+  const canonical = SITE_URL + (path === '/' ? '/' : path.replace(/\/$/, '') + '/');
   const img = SITE_URL + (image || '/img/og-image.jpg');
   const tags = [
     { name: 'description', content: description },
@@ -18,7 +20,7 @@ function buildTags({ title, description, path, image, noindex, schema, breadcrum
     { property: 'og:description', content: description },
     { property: 'og:url', content: canonical },
     { property: 'og:image', content: img },
-    { property: 'og:site_name', content: 'Top Level Garage Doors' },
+    { property: 'og:site_name', content: 'Top Level Garage Door' },
     { property: 'og:locale', content: 'en_US' },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: title },

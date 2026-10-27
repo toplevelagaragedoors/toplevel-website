@@ -5,12 +5,12 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
 
-const { render, allRoutes } = await import(path.join(root, 'dist-ssr/entry-server.js'));
+const { render, allRoutes } = await import(pathToFileURL(path.join(root, 'dist-ssr/entry-server.js')).href);
 let template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
 
 /**
@@ -60,7 +60,7 @@ const urls = allRoutes
   .filter((u) => u !== '/404' && u !== '/privacy-policy' && u !== '/terms-and-conditions')
   .map(
     (u) =>
-      `  <url>\n    <loc>${SITE_URL}${u === '/' ? '/' : u}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>${priority(u)}</priority>\n  </url>`
+      `  <url>\n    <loc>${SITE_URL}${u === '/' ? '/' : u + '/'}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>${priority(u)}</priority>\n  </url>`
   )
   .join('\n');
 

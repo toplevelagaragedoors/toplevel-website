@@ -1192,10 +1192,15 @@
   color: #fff;
 }
 
-.footer__brand img {
-  height: 54px;
-  width: auto;
+.footer__logo {
+  display: inline-block;
   margin-bottom: 1.25rem;
+}
+
+.footer__brand img {
+  height: clamp(72px, 9vw, 96px);
+  width: auto;
+  display: block;
 }
 
 .footer__nap {
@@ -1226,6 +1231,16 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1.15rem;
+}
+
+/* Tablet and below: hide the services column. Mobile also hides quick links,
+   leaving the brand and contact details. */
+@media (max-width: 899px) {
+  .footer__col--services { display: none; }
+}
+
+@media (max-width: 619px) {
+  .footer__col--links { display: none; }
 }
 
 /* --- 404 ----------------------------------------------------------------- */
@@ -1322,4 +1337,584 @@
   .door-stage {
     max-width: 460px;
   }
+}
+
+/* ========================================================================
+   Service detail page (/services/:slug) — scoped helpers, prefixed .svc-
+   Only referenced by src/pages/ServiceDetail.jsx. These are new class names,
+   so no existing template can be affected by them.
+   ===================================================================== */
+.svc-cards {
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 620px) {
+  .svc-cards--2 { grid-template-columns: repeat(2, 1fr); }
+  .svc-cards--3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1000px) {
+  .svc-cards--3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* What we offer — distinct left-accent list cards */
+.svc-offer {
+  background: #fff;
+  border: 1px solid var(--line-light);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 1.15rem 1.3rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  color: var(--text-dark);
+}
+.svc-offer svg {
+  flex: none;
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+/* Torsion vs extension — tinted comparison panels with a top accent rule.
+   Deliberately different from the white reason/related cards nearby. */
+.svc-compare {
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 760px) {
+  .svc-compare {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.svc-compare__panel {
+  background: rgba(0, 82, 254, 0.05);
+  border-top: 3px solid var(--accent);
+  border-radius: 0 0 10px 10px;
+  padding: 1.6rem 1.45rem;
+}
+.svc-compare__panel h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.12rem;
+  letter-spacing: -0.01em;
+  color: var(--brand);
+}
+.svc-compare__panel p {
+  margin: 0;
+  color: var(--text-body);
+}
+
+/* Our process reuses .step but drops the blue hover tint on this page, and
+   brightens the description to white on hover instead. */
+.svc-process .step:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.032), transparent 60%), var(--ink);
+}
+.svc-process .step:hover h3,
+.svc-process .step:hover p {
+  color: #fff;
+}
+
+/* Reasons heading: centered from tablet up, left-aligned on mobile */
+.svc-reasons-head {
+  margin-inline: auto;
+}
+@media (min-width: 620px) {
+  .svc-reasons-head {
+    text-align: center;
+  }
+}
+
+/* Reasons — numbered, constrained cards (replaces full-bleed steps here) */
+.svc-reason {
+  background: #fff;
+  border: 1px solid var(--line-light);
+  border-radius: var(--radius-lg);
+  padding: 1.6rem 1.4rem;
+}
+.svc-reason__n {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+.svc-reason h3 {
+  margin: 0.5rem 0 0.45rem;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+.svc-reason p {
+  margin: 0;
+  color: var(--text-body);
+}
+
+/* Two-column facts list — compact flat rows inside one panel, so its height
+   stays close to the heading column beside it. */
+.svc-facts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  border: 1px solid var(--line-light);
+  border-radius: 12px;
+}
+.svc-facts li {
+  padding: 0.9rem 1.25rem;
+  display: flex;
+  gap: 0.9rem;
+  align-items: baseline;
+}
+.svc-facts li + li {
+  border-top: 1px solid var(--line-light);
+}
+.svc-facts strong {
+  flex: none;
+  width: 8rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.svc-facts span {
+  color: var(--text-body);
+  font-size: 0.93rem;
+}
+@media (max-width: 479px) {
+  .svc-facts li {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .svc-facts strong {
+    width: auto;
+  }
+}
+
+/* Testimonials — three-card slider with read-more */
+.svc-thead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+.svc-tnav {
+  display: flex;
+  gap: 0.5rem;
+}
+.svc-tbtn {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid var(--line-light);
+  background: #fff;
+  color: var(--text-dark);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+.svc-tbtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.svc-tcarousel {
+  display: flex;
+  gap: 1.1rem;
+  overflow-x: auto;
+  align-items: flex-start;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 0.5rem;
+}
+.svc-tcarousel::-webkit-scrollbar {
+  display: none;
+}
+.svc-tslide {
+  flex: 0 0 calc((100% - 2 * 1.1rem) / 3);
+  scroll-snap-align: start;
+}
+@media (max-width: 999px) {
+  .svc-tslide {
+    flex-basis: calc((100% - 1.1rem) / 2);
+  }
+}
+@media (max-width: 619px) {
+  .svc-tslide {
+    flex-basis: 100%;
+  }
+}
+.svc-review {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--line-light);
+  border-radius: var(--radius-lg);
+  padding: 1.6rem 1.5rem;
+}
+.svc-stars {
+  color: #f5a623;
+  font-size: 1rem;
+  letter-spacing: 2px;
+}
+.svc-review__text {
+  margin: 0.85rem 0 0.5rem;
+  color: var(--text-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.svc-review__text.is-clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.svc-review__more {
+  align-self: flex-start;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+}
+.svc-review__more:hover {
+  text-decoration: underline;
+}
+.svc-review__name {
+  margin-top: auto;
+  padding-top: 0.6rem;
+  font-family: var(--display);
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+/* GBP map embed */
+.svc-map {
+  position: relative;
+  width: 100%;
+  height: clamp(300px, 42vw, 420px);
+  border: 1px solid var(--line-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.svc-map iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Testimonials header right group (review button + slider arrows) */
+.svc-thead__right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Leave Us A Review popup (GS Marketing review tool, scoped .rlg-) */
+.rlg-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 999999;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 5vh 1rem;
+  overflow-y: auto;
+}
+
+/* The site hides the native cursor (body.has-cursor) and draws its own dot,
+   which sits below this popup's z-index - so over the popup there would be no
+   visible cursor at all. Restore the real cursor inside the popup; the extra
+   class selectors outweigh the global `body.has-cursor button` rule. */
+body.has-cursor .rlg-popup-overlay,
+body.has-cursor .rlg-popup-overlay * {
+  cursor: auto;
+}
+body.has-cursor .rlg-popup-overlay button,
+body.has-cursor .rlg-popup-overlay [role='radio'],
+body.has-cursor .rlg-popup-overlay [role='button'] {
+  cursor: pointer;
+}
+body.has-cursor .rlg-popup-overlay button:disabled {
+  cursor: default;
+}
+.rlg-popup-content {
+  background: #fff;
+  padding: 32px;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 16px;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+.rlg-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 28px;
+  line-height: 1;
+  color: #9ca3af;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.rlg-close:hover {
+  color: #374151;
+}
+.rlg-review-container {
+  text-align: center;
+}
+.rlg-review-container h3 {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 10px;
+}
+.rlg-review-container > p {
+  font-size: 15px;
+  color: #6b7280;
+  margin: 0 0 22px;
+}
+
+/* Featured review shown inside the popup as social proof */
+.rlg-review-content {
+  text-align: left;
+  background: #f7f8fa;
+  border: 1px solid #eceef1;
+  border-radius: 12px;
+  padding: 15px 18px;
+  margin: 22px 0 0;
+}
+.rlg-review-content strong {
+  display: block;
+  color: #111827;
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 700;
+}
+.rlg-stars {
+  color: #fbbf24;
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin: 3px 0 1px;
+}
+.rlg-time {
+  font-size: 12px;
+  color: #9ca3af;
+}
+.rlg-review-content p {
+  margin: 9px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #4b5563;
+}
+.rlg-star-rating-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.rlg-star-rating {
+  display: inline-flex;
+  gap: 4px;
+  font-size: 36px;
+}
+.rlg-star {
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: 1;
+  color: #e5e7eb;
+  cursor: pointer;
+  transition: color 0.15s, transform 0.15s;
+}
+.rlg-star:hover {
+  transform: scale(1.1);
+}
+.rlg-star.is-on {
+  color: #fbbf24;
+}
+.rlg-submit-btn {
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.rlg-submit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.rlg-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: default;
+  transform: none;
+}
+.rlg-feedback-form {
+  margin-top: 16px;
+  text-align: left;
+}
+.rlg-feedback-form h3 {
+  font-size: 18px;
+  color: #111827;
+  margin: 0 0 12px;
+}
+.rlg-feedback-form textarea {
+  width: 100%;
+  height: 100px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  margin-bottom: 12px;
+}
+.rlg-feedback-form textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(0, 40, 160, 0.12);
+}
+.rlg-thank-you {
+  text-align: center;
+  padding: 16px;
+}
+.rlg-thank-you__check {
+  font-size: 48px;
+  color: #10b981;
+  margin: 0 0 8px;
+}
+.rlg-thank-you p {
+  font-size: 16px;
+  color: #374151;
+  margin: 0;
+}
+
+/* Service rail cards become links to their detail pages */
+.svcard__link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Area rows link to their location pages (the hover state already existed) */
+a.arearow {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Header nav dropdowns (desktop) */
+.nav__group {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.nav__group > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+}
+.nav__caret {
+  transition: transform 0.25s var(--ease);
+}
+.nav__group:hover .nav__caret,
+.nav__group:focus-within .nav__caret {
+  transform: rotate(180deg);
+}
+.nav__menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding-top: 0.55rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), visibility 0.2s;
+  z-index: 60;
+}
+.nav__group:hover .nav__menu,
+.nav__group:focus-within .nav__menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nav__menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(160px, 1fr));
+  gap: 0.1rem 0.6rem;
+  width: max-content;
+  max-width: 480px;
+  background: #fff;
+  border: 1px solid var(--line-light);
+  border-radius: 12px;
+  box-shadow: 0 24px 48px -24px rgba(4, 16, 44, 0.3);
+  padding: 0.7rem;
+}
+.nav__menu-grid a {
+  display: block;
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+  font-family: var(--body);
+  font-size: 0.84rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--text-dark);
+}
+.nav__menu-grid a::after {
+  display: none;
+}
+.nav__menu-grid a:hover {
+  background: rgba(0, 82, 254, 0.06);
+  color: var(--accent);
+}
+
+/* Header nav dropdowns (mobile drawer) */
+.drawer__group > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.05rem 0;
+  border-bottom: 1px solid var(--line-dark);
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--display);
+  font-size: 1.32rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+}
+.drawer__group > summary::-webkit-details-marker {
+  display: none;
+}
+.drawer__group[open] > summary .nav__caret {
+  transform: rotate(180deg);
+}
+.drawer__sub a {
+  padding: 0.7rem 0 0.7rem 1rem !important;
+  font-family: var(--body) !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+.drawer__sub a:hover {
+  color: #fff !important;
 }

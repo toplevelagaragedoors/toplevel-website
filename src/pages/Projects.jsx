@@ -6,7 +6,6 @@ import Reveal from '../components/Reveal.jsx';
 import { CtaBand, Crumbs } from '../components/Blocks.jsx';
 import { Phone } from '../components/Icons.jsx';
 import { projects, biz } from '../data/site.js';
-import { breadcrumbSchema } from '../lib/schema.js';
 
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -66,10 +65,9 @@ export function ProjectsPage() {
   return (
     <>
       <Seo
-        title="Recent Garage Door Projects | Top Level Garage Doors, Charleston"
+        title="Recent Garage Door Projects in Charleston, SC"
         description="Photos of recent garage door installations, spring replacements, opener installs and track work completed across Charleston and the surrounding areas."
         path="/projects"
-        breadcrumbs={breadcrumbSchema(trail)}
       />
 
       <section className="pagehead">

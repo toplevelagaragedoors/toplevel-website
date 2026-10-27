@@ -6,8 +6,8 @@
 export const SITE_URL = 'https://toplevelgaragedoorssc.com';
 
 export const biz = {
-  name: 'Top Level Garage Doors',
-  legalName: 'Top Level Garage Doors',
+  name: 'Top Level Garage Door',
+  legalName: 'Top Level Garage Door',
   phone: '843-830-1627',
   phoneHref: 'tel:+18438301627',
   phoneRaw: '+18438301627',
@@ -20,13 +20,9 @@ export const biz = {
   longitude: -79.9366,
   founded: '2015',
   yearsExperience: 10,
-  hours: 'Sun-Thu 7am-7pm · Fri 7am-4pm · Sat closed',
-  hoursShort: 'Sun-Thu 7am-7pm',
-  hoursList: [
-    { days: 'Sunday - Thursday', time: '7:00 AM - 7:00 PM' },
-    { days: 'Friday', time: '7:00 AM - 4:00 PM' },
-    { days: 'Saturday', time: 'Closed' },
-  ],
+  hours: 'Open 24/7, all week',
+  hoursShort: 'Open 24/7',
+  hoursList: [{ days: 'Monday - Sunday', time: 'Open 24 hours' }],
   priceRange: '$$',
   radiusMiles: 20,
 };
@@ -36,6 +32,7 @@ export const addressOneLine = `${biz.city}, ${biz.state}`;
 
 // --- Services --------------------------------------------------------------
 export const services = [
+  { slug: 'garage-door-cable-repair', name: 'Cable Repair', short: 'Snapped or frayed lift cables replaced and re-tensioned so the door runs level.', img: 'sv-off-track-repair', alt: 'Garage door hanging unevenly off its tracks inside a residential garage' },
   { slug: 'springs-replacement', name: 'Springs Replacement', short: 'Torsion and extension springs replaced in matched pairs, sized to your door.', img: 'sv-springs-replacement', alt: 'Torsion springs on the spring bar above a white garage door with window inserts' },
   { slug: 'opener-repair', name: 'Opener Repair', short: 'Gears, sprockets, trolleys, safety eyes and travel limits put right.', img: 'sv-opener-repair', alt: 'Garage door opener with the casing open showing the control board and chain drive' },
   { slug: 'opener-installation', name: 'Opener Installation', short: 'Chain, belt and wall-mount openers fitted and programmed.', img: 'sv-opener-installation', alt: 'LiftMaster garage door opener mounted to the ceiling with the rail fitted' },
@@ -46,7 +43,7 @@ export const services = [
   { slug: 'weather-strip-replacement', name: 'Bottom Weather Strip Replacement', short: 'New bottom seal to keep water, draughts and pests out of the garage.', img: 'sv-weather-strip-replacement', alt: 'New black bottom weather seal fitted along the base of a white garage door' },
   { slug: 'panels-repair', name: 'Panels Repair', short: 'Dented or damaged sections repaired where a full replacement is not needed.', img: 'sv-panels-repair', alt: 'Cracked and dented section on a white raised-panel garage door' },
   { slug: 'panels-replacement', name: 'Panels Replacement', short: 'Individual sections replaced and colour-matched to the existing door.', img: 'sv-panels-replacement', alt: 'Newly installed white long-panel garage door with window inserts' },
-  { slug: 'new-door-installation', name: 'New Door Installation', short: 'Insulated steel, carriage house and full-view glass, measured on site.', img: 'sv-new-door-installation', alt: 'Newly installed brown carriage-style garage door with window inserts and decorative hardware' },
+  { slug: 'garage-door-replacement', name: 'Garage Door Replacement', short: 'Insulated steel, carriage house and full-view glass doors, measured and fitted on site.', img: 'sv-new-door-installation', alt: 'Newly installed brown carriage-style garage door with window inserts and decorative hardware' },
   { slug: 'emergency-services', name: 'Emergency Services', short: 'Door stuck open or car trapped inside? You go to the front of the queue.', img: 'sv-emergency-services', alt: 'Car crashed through a white sectional garage door, with the door panels and track torn off' },
   { slug: 'service-and-maintenance', name: 'Service and Maintenance', short: 'Annual tune-ups that catch worn parts before they strand you.', img: 'sv-service-and-maintenance', alt: 'Technician lubricating a garage door hinge and roller during a maintenance visit' },
 ];
@@ -127,14 +124,24 @@ export const areas = [
     landmarks: ['Daniel Island Park', 'Smythe Park', 'Codner’s Ferry', 'Etiwan Park'],
   },
   {
-    slug: 'sullivans-island-and-isle-of-palms',
-    name: "Sullivan's Island & Isle of Palms",
+    slug: 'isle-of-palms',
+    name: 'Isle of Palms',
     distance: '11 miles',
     blurb:
-      'Beachfront and elevated homes on both barrier islands, including high-lift installations under raised houses.',
+      'Beachfront cottages, elevated homes and Wild Dunes rentals, where salt air and tall pilings shape every door.',
     note:
-      'Elevated beach houses often need high-lift or wall-mount jackshaft openers because there is no ceiling room for a standard rail. Direct salt exposure also makes corrosion-resistant hardware essential rather than optional.',
-    landmarks: ["Sullivan's Island", 'Isle of Palms', 'Wild Dunes', 'Breach Inlet'],
+      'Elevated homes on Isle of Palms often need high-lift or wall-mount jackshaft openers because there is no ceiling room for a standard rail, and rental turnovers mean fast, reliable repairs matter.',
+    landmarks: ['Wild Dunes', 'Front Beach', 'Breach Inlet', 'Isle of Palms County Park'],
+  },
+  {
+    slug: 'sullivans-island',
+    name: "Sullivan's Island",
+    distance: '11 miles',
+    blurb:
+      'Historic beach homes from Fort Moultrie to the Stations, where direct salt exposure makes corrosion-resistant hardware essential.',
+    note:
+      "Direct salt exposure on Sullivan's Island makes galvanized tracks, sealed nylon rollers and stainless fasteners worth specifying, and many elevated homes need high-lift or wall-mount openers.",
+    landmarks: ['Fort Moultrie', "Sullivan's Island Lighthouse", 'Breach Inlet', 'Middle Street'],
   },
   {
     slug: 'folly-beach',
@@ -211,7 +218,7 @@ export const projects = [
 export const homeFaqs = [
   {
     q: 'How quickly can you get to me?',
-    a: 'Same day service inside our service area. Emergencies - a door stuck open, a car trapped, a snapped spring - go ahead of scheduled work. We are open Sunday to Thursday 7am-7pm and Friday until 4pm.',
+    a: 'Same day service inside our service area. Emergencies - a door stuck open, a car trapped, a snapped spring - go ahead of scheduled work. We are open 24/7, all week.',
   },
   {
     q: 'Is the estimate really free?',
@@ -234,7 +241,7 @@ export const homeFaqs = [
 
 export const trustPoints = [
   { label: 'Experience', value: '10+ yrs', note: 'In the industry' },
-  { label: 'Open', value: 'Sun-Fri', note: 'Six days a week' },
+  { label: 'Open', value: '24/7', note: 'All week' },
   { label: 'Typical response', value: 'Same day', note: 'Service' },
   { label: 'Pricing', value: 'Upfront', note: 'Before work begins' },
 ];
@@ -256,5 +263,36 @@ export const processSteps = [
   {
     title: 'We get it done',
     body: 'We complete the repair quickly, test the door through a full cycle, and walk you through what changed.',
+  },
+];
+
+// --- Customer reviews -------------------------------------------------------
+// Genuine five-star Google reviews, used verbatim (minor punctuation only).
+// These are general company reviews, not tied to any one service. Do not add
+// Review or AggregateRating schema for them.
+export const reviews = [
+  {
+    name: 'Shiri Cohe',
+    text: 'Great experience! My garage door was off track and needed new rollers. The technician did an excellent job, and now the door works perfectly. Fast, professional service at a fair price. Highly recommend!',
+  },
+  {
+    name: 'Bar Abuhazira',
+    text: 'Great experience! Nick was super friendly, professional, and really helpful. He fixed my garage door quickly and made sure everything was working perfectly. Really appreciate his work. Highly recommend!',
+  },
+  {
+    name: 'Robert Leibo',
+    text: 'Absolutely amazing experience. I had my old garage door opener replaced with a new LiftMaster opener that includes a battery backup and built-in camera, and I couldn’t be happier! The new opener is incredibly quiet, smooth, and works perfectly. The service was truly above and beyond my expectations! Nick, the technician, was absolutely outstanding. He was professional, knowledgeable, friendly, and went the extra mile to make sure everything was installed perfectly and that I understood how everything worked. It’s rare to find this level of customer service these days. Great quality, excellent workmanship, and an amazing experience overall. I highly recommend this company to anyone looking for garage door services, and definitely ask for Nick! You won’t be disappointed!',
+  },
+  {
+    name: 'Yarden Ohana',
+    text: 'Great experience with Top Level! Sean did an excellent job fixing my garage doors in Moncks Corner, and I’m very happy with the service. Highly recommend Sean and the team to anyone looking for local garage door repair. Thank you, Sean, for a job well done!',
+  },
+  {
+    name: 'B',
+    text: 'Great service! Very professional and friendly. Highly recommend!',
+  },
+  {
+    name: 'Briliant Shamailov',
+    text: 'Excellent service from start to finish! I had my garage door springs replaced, and the whole experience was fantastic. Very professional, friendly, and efficient service. The technician arrived on time, explained everything clearly, and got the job done quickly. The price was very reasonable and affordable. Great quality work at a great price! I highly recommend them to anyone who needs garage door repairs or services. Definitely a 5-star experience!',
   },
 ];
